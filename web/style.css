@@ -1,23 +1,40 @@
+/* ----- Palette: warm greys, charcoal and terracotta (editorial grid style) ----- */
 :root {
-  --bg: #f4f5f7;
-  --card: #ffffff;
-  --text: #1d2330;
-  --muted: #6b7280;
-  --btn: #e6e9ef;
-  --btn-edge: #c9ced8;
-  --accent: #2f9e6f;
-  --accent-text: #ffffff;
+  --paper: #e6e4e0;       /* warm light grey page */
+  --white: #ffffff;
+  --stone: #c9c7c3;       /* mid grey tiles */
+  --ash: #75736f;         /* muted text */
+  --charcoal: #4a4a4c;    /* dark tiles */
+  --graphite: #3e3e40;
+  --night: #2a2a2c;
+  --ink: #2e2e30;         /* body text */
+  --cream: #f1eee9;
+  --sand: #f1ebe2;        /* pale tan tint */
+  --terracotta: #d9a48e;  /* copper tile, lightened for dark mode */
+  --clay: #9c6a55;        /* terracotta deepened so white text passes contrast */
+  --clay-dark: #2a1d17;
+
+  --bg: var(--paper);
+  --card: var(--white);
+  --text: var(--ink);
+  --muted: var(--ash);
+  --btn: var(--paper);
+  --btn-edge: var(--stone);
+  --code: var(--sand);
+  --accent: var(--clay);
+  --accent-text: var(--white);
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #14171c;
-    --card: #1d2129;
-    --text: #e8eaee;
-    --muted: #9aa1ad;
-    --btn: #2a303a;
-    --btn-edge: #3a414d;
-    --accent: #3cc488;
-    --accent-text: #0d1a14;
+    --bg: var(--night);
+    --card: var(--graphite);
+    --text: var(--cream);
+    --muted: #bdb9b3;
+    --btn: var(--charcoal);
+    --btn-edge: var(--night);
+    --code: var(--charcoal);
+    --accent: var(--terracotta);
+    --accent-text: var(--clay-dark);
   }
 }
 * { box-sizing: border-box; }
@@ -148,7 +165,7 @@ dialog pre {
   margin: 6px 0;
   padding: 10px 12px;
   border-radius: 8px;
-  background: var(--btn);
+  background: var(--code);
   overflow-x: auto;
 }
 dialog .more { margin-top: 16px; }
@@ -158,3 +175,4 @@ dialog .more { margin-top: 16px; }
   font-size: 1rem;
   cursor: pointer;
 }
+button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }

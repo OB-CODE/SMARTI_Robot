@@ -1,20 +1,19 @@
-/* ----- Palette: warm greys, charcoal and terracotta (editorial grid style) ----- */
+/* ----- Palette: 6 colours, warm greys, charcoal and clay (editorial grid style) ----- */
 :root {
   --white: #ffffff;
   --paper: #e6e4e0;       /* warm light grey */
-  --stone: #c9c7c3;       /* mid grey */
   --ash: #75736f;         /* muted text */
   --charcoal: #4a4a4c;    /* dark tiles */
   --ink: #2e2e30;         /* darkest: text, dark background */
   --clay: #9c6a55;        /* copper tile, deepened so white text passes contrast */
-  --terracotta: #e3b5a2;  /* copper tile, lightened for dark mode */
+  /* Borders, shadows and hovers are mixes of these, not extra colours */
 
   --bg: var(--paper);
   --card: var(--white);
   --text: var(--ink);
   --muted: var(--ash);
   --btn: var(--paper);
-  --btn-edge: var(--stone);
+  --btn-edge: color-mix(in srgb, var(--paper), var(--ink) 15%);
   --code: var(--paper);
   --accent: var(--clay);
   --accent-text: var(--white);
@@ -24,11 +23,11 @@
     --bg: var(--ink);
     --card: var(--charcoal);
     --text: var(--paper);
-    --muted: var(--stone);
+    --muted: color-mix(in srgb, var(--paper) 75%, var(--charcoal));
     --btn: var(--ink);
     --btn-edge: color-mix(in srgb, var(--ink), black 40%);
     --code: var(--ink);
-    --accent: var(--terracotta);
+    --accent: var(--paper); /* clay is too dark to read on charcoal */
     --accent-text: var(--ink);
   }
 }
@@ -192,6 +191,11 @@ body { --drawer-w: clamp(460px, 45vw, 640px); } /* side panel width, also used t
 .tour .grp.on .pins rect { fill: var(--accent); }
 .tour .grp.on .part { stroke: var(--accent); }
 .tour text { fill: var(--text); font-size: 10px; font-family: inherit; }
+.tour text.small { font-size: 8px; }
+.tour .terminal { fill: #3a7bbf; stroke: var(--muted); stroke-width: 1.5; }
+.drawer figure { margin: 10px 0; }
+.drawer img { display: block; width: 100%; max-width: 280px; margin: 0 auto; border-radius: 12px; }
+.drawer figcaption { margin-top: 6px; color: var(--muted); font-size: 0.8rem; text-align: center; }
 .tour-note { color: var(--muted); font-size: 0.75rem; text-align: center; }
 .tour .step[hidden] { display: none; }
 .pinout { display: flex; gap: 6px; margin: 8px 0; }
@@ -217,7 +221,7 @@ body { --drawer-w: clamp(460px, 45vw, 640px); } /* side panel width, also used t
 .tour-nav button:hover { background: color-mix(in srgb, var(--btn), var(--text) 7%); }
 .tour-nav button:disabled { opacity: 0.3; cursor: default; }
 .dots { display: flex; gap: 6px; }
-.dots button { width: 8px; height: 8px; padding: 0; border-radius: 50%; background: var(--stone); }
+.dots button { width: 8px; height: 8px; padding: 0; border-radius: 50%; background: var(--btn-edge); }
 .dots button[aria-current="true"] { background: var(--accent); }
 .close {
   padding: 4px 8px;

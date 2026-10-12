@@ -44,7 +44,7 @@
   goTo(0);
 
   // Palette swatches, read from the CSS variables at the top of style.css
-  const PALETTE = ["white", "paper", "stone", "ash", "charcoal", "ink", "clay", "terracotta"];
+  const PALETTE = ["white", "paper", "ash", "charcoal", "ink", "clay"];
   const css = getComputedStyle(document.documentElement);
   document.getElementById("swatches").innerHTML = PALETTE.map(name => {
     const hex = css.getPropertyValue("--" + name).trim();

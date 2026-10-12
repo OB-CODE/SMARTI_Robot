@@ -150,7 +150,18 @@
     const status = document.getElementById("status");
     const card = document.getElementById("card");
     const connectBtn = document.getElementById("connect");
-    let held = null, stopPending = false, sending = false;
+    let held = null, pressedAt = 0, stopPending = false, sending = false;
+
+    // Turns start gently and speed up the longer the key is held, so a quick tap only nudges the robot round
+    const TURN_START = 0.4; // turn speed on first press (0-1); lower = smaller minimum turn
+    const TURN_RAMP_MS = 600; // time to reach full turn speed
+    const speedFor = key => {
+      const [l, r] = keys[key];
+      if (l === r) return [l, r]; // forward/back: full speed straight away
+      const t = Math.min(1, (Date.now() - pressedAt) / TURN_RAMP_MS);
+      const s = TURN_START + (1 - TURN_START) * t;
+      return [+(l * s).toFixed(2), +(r * s).toFixed(2)];
+    };
 
     // Only one command is ever in flight, so commands can't pile up in the Bluetooth queue.
     // While a key is held, the next drive() goes out as soon as the previous one has been delivered.
@@ -159,7 +170,7 @@
       sending = true;
       try {
         while (held || stopPending) {
-          const [l, r] = held ? keys[held] : [0, 0];
+          const [l, r] = held ? speedFor(held) : [0, 0];
           if (!held) stopPending = false;
           // noWait: resolve once delivered, instead of waiting ~0.3s for a reply the robot never sends
           await UART.write(`\x10drive(${l},${r});\n`, { noWait: true });
@@ -175,6 +186,7 @@
     const press = key => {
       if (held) buttons[held].classList.remove("active");
       held = key;
+      pressedAt = Date.now();
       buttons[key].classList.add("active");
       pump();
     };

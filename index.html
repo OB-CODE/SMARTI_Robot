@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<body>
+  <button id="connect">Connect</button>
+  <p>Hold arrow keys to drive</p>
+  <script src="https://www.espruino.com/js/uart.js"></script>
+  <script>
+    // Sent to the robot once: drive() runs the motors, then stops them unless another drive() arrives within 300ms
+    const setup = "\x10var _t;function drive(l,r){motor(l,r);if(_t)clearTimeout(_t);_t=setTimeout(function(){_t=0;motor(0,0);},300);}\n";
+    const keys = {
+      ArrowUp:    [1, 1],
+      ArrowDown:  [-1, -1],
+      ArrowLeft:  [-1, 1],
+      ArrowRight: [1, -1],
+    };
+    let held = null, timer = null;
+
+    const send = ([l, r]) => UART.write(`\x10drive(${l},${r});\n`);
+
+    document.getElementById("connect").onclick = () => UART.write(setup);
+
+    document.onkeydown = e => {
+      if (!keys[e.key] || e.repeat) return;
+      e.preventDefault();
+      held = e.key;
+      send(keys[held]);
+      clearInterval(timer);
+      timer = setInterval(() => send(keys[held]), 100); // keep the robot moving
+    };
+    const release = e => {
+      if (e && e.key !== held) return;
+      held = null;
+      clearInterval(timer); // stop resending; the robot's 300ms timeout stops the motors
+    };
+    document.onkeyup = release;
+    window.onblur = () => release();
+  </script>
+</body>
+</html>

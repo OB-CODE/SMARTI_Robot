@@ -1,0 +1,16 @@
+{
+  "name": "OBCODES-BOT Drive",
+  "short_name": "OBCODES-BOT",
+  "description": "Drive the Espruino Smartibot over Bluetooth.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#e6e4e0",
+  "theme_color": "#9c6a55",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

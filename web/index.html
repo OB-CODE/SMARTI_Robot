@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Smartibot Drive</title>
+  <title>OBCODES-BOT Drive</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header class="topbar">
-    <span class="brand">Smartibot</span>
+    <span class="brand">OBCODES-BOT</span>
     <nav class="menu">
       <button data-open="start">Start</button>
       <button data-open="commands">Commands</button>
@@ -18,6 +18,7 @@
     </nav>
   </header>
 
+  <div class="stage">
   <main class="card off" id="card">
     <h1>Drive</h1>
     <div class="link" aria-hidden="true">
@@ -35,14 +36,119 @@
     </div>
     <p class="hint">Hold an arrow key or button to drive</p>
   </main>
+  </div>
 
-  <!-- Info pop-ups: opened by the menu buttons above (see info.js) -->
-  <dialog id="start">
+  <!-- Info side panel: each menu button shows its section (see info.js) -->
+  <aside class="drawer" id="drawer" aria-label="Info" hidden>
+  <section id="start" hidden>
     <header><h2>Getting started</h2><button class="close" aria-label="Close">✕</button></header>
-    <figure>
-      <img src="https://www.espruino.com/refimages/Smartibot.jpg" alt="Smartibot board fitted to its cardboard body" loading="lazy">
-      <figcaption>Board labels: <b>M1/M2</b> motors · <b>S1–S10</b> servos · <b>E1/E2</b> add-on ports · <b>A/B</b> buttons. Photo: <a href="https://www.espruino.com/Smartibot" target="_blank">espruino.com</a></figcaption>
-    </figure>
+    <!-- Board tour: step through the pin groups (see info.js). Simplified diagram, not the real layout. -->
+    <div class="tour" id="tour">
+      <svg viewBox="0 0 320 220" role="img" aria-label="Simplified Smartibot board diagram">
+        <rect class="board" x="10" y="10" width="300" height="200" rx="14"/>
+        <g class="grp" data-group="servos">
+          <g class="pins">
+            <rect x="57" y="26" width="7" height="7"/><rect x="57" y="35" width="7" height="7"/><rect x="57" y="44" width="7" height="7"/>
+            <rect x="77" y="26" width="7" height="7"/><rect x="77" y="35" width="7" height="7"/><rect x="77" y="44" width="7" height="7"/>
+            <rect x="97" y="26" width="7" height="7"/><rect x="97" y="35" width="7" height="7"/><rect x="97" y="44" width="7" height="7"/>
+            <rect x="117" y="26" width="7" height="7"/><rect x="117" y="35" width="7" height="7"/><rect x="117" y="44" width="7" height="7"/>
+            <rect x="137" y="26" width="7" height="7"/><rect x="137" y="35" width="7" height="7"/><rect x="137" y="44" width="7" height="7"/>
+            <rect x="157" y="26" width="7" height="7"/><rect x="157" y="35" width="7" height="7"/><rect x="157" y="44" width="7" height="7"/>
+            <rect x="177" y="26" width="7" height="7"/><rect x="177" y="35" width="7" height="7"/><rect x="177" y="44" width="7" height="7"/>
+            <rect x="197" y="26" width="7" height="7"/><rect x="197" y="35" width="7" height="7"/><rect x="197" y="44" width="7" height="7"/>
+            <rect x="217" y="26" width="7" height="7"/><rect x="217" y="35" width="7" height="7"/><rect x="217" y="44" width="7" height="7"/>
+            <rect x="237" y="26" width="7" height="7"/><rect x="237" y="35" width="7" height="7"/><rect x="237" y="44" width="7" height="7"/>
+          </g>
+          <text x="60" y="64" text-anchor="middle">S1</text>
+          <text x="240" y="64" text-anchor="middle">S10</text>
+          <text x="150" y="64" text-anchor="middle">Servos</text>
+        </g>
+        <g class="grp" data-group="power">
+          <rect class="part" x="22" y="92" width="44" height="46" rx="4"/>
+          <g class="pins"><rect x="32" y="100" width="8" height="8"/><rect x="48" y="100" width="8" height="8"/></g>
+          <rect class="part" x="34" y="118" width="20" height="10" rx="5"/>
+          <text x="44" y="152" text-anchor="middle">Power</text>
+        </g>
+        <g class="grp" data-group="brain">
+          <rect class="part" x="125" y="88" width="70" height="44" rx="4"/>
+          <text x="160" y="114" text-anchor="middle">Brain</text>
+        </g>
+        <g class="grp" data-group="ports">
+          <rect class="part" x="246" y="80" width="50" height="28" rx="4"/>
+          <g class="pins">
+            <rect x="252" y="85" width="7" height="7"/><rect x="262" y="85" width="7" height="7"/><rect x="272" y="85" width="7" height="7"/>
+            <rect x="252" y="96" width="7" height="7"/><rect x="262" y="96" width="7" height="7"/><rect x="272" y="96" width="7" height="7"/>
+          </g>
+          <text x="288" y="98" text-anchor="middle">E1</text>
+          <rect class="part" x="246" y="116" width="50" height="28" rx="4"/>
+          <g class="pins">
+            <rect x="252" y="121" width="7" height="7"/><rect x="262" y="121" width="7" height="7"/><rect x="272" y="121" width="7" height="7"/>
+            <rect x="252" y="132" width="7" height="7"/><rect x="262" y="132" width="7" height="7"/><rect x="272" y="132" width="7" height="7"/>
+          </g>
+          <text x="288" y="134" text-anchor="middle">E2</text>
+        </g>
+        <g class="grp" data-group="io">
+          <circle class="part" cx="100" cy="150" r="7"/><text x="100" y="168" text-anchor="middle">A</text>
+          <circle class="part" cx="220" cy="150" r="7"/><text x="220" y="168" text-anchor="middle">B</text>
+          <circle class="part" cx="148" cy="150" r="5"/><circle class="part" cx="172" cy="150" r="5"/>
+          <text x="160" y="168" text-anchor="middle">Eyes</text>
+        </g>
+        <g class="grp" data-group="motors">
+          <g class="pins">
+            <rect x="52" y="180" width="8" height="8"/><rect x="64" y="180" width="8" height="8"/>
+            <rect x="112" y="180" width="8" height="8"/><rect x="124" y="180" width="8" height="8"/>
+            <rect x="188" y="180" width="8" height="8"/><rect x="200" y="180" width="8" height="8"/>
+            <rect x="248" y="180" width="8" height="8"/><rect x="260" y="180" width="8" height="8"/>
+          </g>
+          <text x="62" y="202" text-anchor="middle">M1</text><text x="122" y="202" text-anchor="middle">M2</text>
+          <text x="198" y="202" text-anchor="middle">M3</text><text x="258" y="202" text-anchor="middle">M4</text>
+        </g>
+      </svg>
+      <p class="tour-note">Simplified diagram: positions on your board differ. Find each group by the labels printed on it.</p>
+
+      <div class="step" data-show="servos power brain ports io motors">
+        <h3>1. The board</h3>
+        <p>The <b>brain</b> is a Bluetooth chip running Espruino. Everything else plugs into it through groups of pins, and each group is labelled on the board. Use the arrows to go through them one at a time.</p>
+      </div>
+      <div class="step" data-show="power">
+        <h3>2. Power</h3>
+        <p>The battery pack plugs in here, and the switch turns the board on. The motors and servos run straight off the batteries, so <b>weak batteries mean slow motors</b>.</p>
+        <pre><code>NRF.getBattery()  // battery voltage</code></pre>
+      </div>
+      <div class="step" data-show="motors">
+        <h3>3. Motors: M1–M4</h3>
+        <p>Each motor has <b>2 pins</b>. There's no + or −: the way round you plug it in only sets which way it spins. If a wheel goes backwards, swap its two wires or use a negative speed.</p>
+        <div class="pinout"><span>wire</span><span>wire</span></div>
+        <p>Your wheels are on <b>M1 and M2</b>. M3 and M4 are spare.</p>
+        <pre><code>s.setMotor(1, 0.5);  // speed -1..1</code></pre>
+      </div>
+      <div class="step" data-show="servos">
+        <h3>4. Servos: S1–S10</h3>
+        <p>Each servo has <b>3 pins</b>, one for each wire on a servo plug:</p>
+        <div class="pinout"><span><b>−</b> ground<br><i>brown/black</i></span><span><b>+</b> power<br><i>red</i></span><span><b>S</b> signal<br><i>orange/yellow</i></span></div>
+        <p>Check the board's markings for which end is ground, and plug the <b>dark wire</b> in on that side. If it's the wrong way round, the servo won't move.</p>
+        <pre><code>s.setServo(1, 50);  // position 0..100</code></pre>
+      </div>
+      <div class="step" data-show="ports">
+        <h3>5. Add-on ports: E1 and E2</h3>
+        <p>These are for add-on boards like the display and distance sensor. Each port has:</p>
+        <div class="pinout"><span><b>SDA SCL</b><br>I²C data</span><span><b>AD INT</b><br>general pins</span><span><b>+ −</b><br>power</span></div>
+        <p>Both ports share one I²C bus, so the add-ons can use either. The labels on the board give the pin order.</p>
+        <pre><code>require("Smartibot-display").connect(s.E1)</code></pre>
+      </div>
+      <div class="step" data-show="io">
+        <h3>6. Buttons and lights</h3>
+        <p><b>A</b> and <b>B</b> are buttons you can read in code. The two <b>eyes</b> are colour LEDs. There's also a small blue LED.</p>
+        <pre><code>BTN1.read()                      // button A
+s.setLEDs([255,0,0], [0,0,255]); // eyes</code></pre>
+      </div>
+
+      <div class="tour-nav">
+        <button class="prev" aria-label="Previous">←</button>
+        <span class="dots"></span>
+        <button class="next" aria-label="Next">→</button>
+      </div>
+    </div>
     <ul>
       <li>Use <b>Chrome</b> (Web Bluetooth). Switch the robot on.</li>
       <li><b>This page:</b> click Connect and choose <i>Espruino SMARTIBOT</i>.</li>
@@ -52,9 +158,9 @@
       <li>Only one app can be connected at a time, so disconnect the IDE before using this page.</li>
     </ul>
     <p class="more"><a href="https://www.espruino.com/Quick+Start+BLE#smartibot" target="_blank">Official quick start →</a></p>
-  </dialog>
+  </section>
 
-  <dialog id="commands">
+  <section id="commands" hidden>
     <header><h2>Commands</h2><button class="close" aria-label="Close">✕</button></header>
     <pre><code>var s = require("Smartibot");</code></pre>
     <h3>Motors</h3>
@@ -62,11 +168,12 @@
 s.setMotor(1, 0);    // stop</code></pre>
     <p>Motors 1 and 2 drive the wheels. Test which one is left.</p>
     <h3>Eye LEDs</h3>
-    <pre><code>s.setLEDs([255,0,0], [0,0,255]); // left, right [R,G,B] 0..255
-s.setLEDs();                     // off
-LED.write(1);                    // small blue LED</code></pre>
+    <pre><code>// left eye, right eye: [R,G,B] 0..255
+s.setLEDs([255,0,0], [0,0,255]);
+s.setLEDs();    // off
+LED.write(1);   // small blue LED</code></pre>
     <h3>Servos</h3>
-    <pre><code>s.setServo(1, 50);   // servo 1..10, position 0..100</code></pre>
+    <pre><code>s.setServo(1, 50);  // servo 1..10, position 0..100</code></pre>
     <h3>Buttons</h3>
     <pre><code>BTN1.read();  // A (BTN2 = B)
 setWatch(e =&gt; print(e.state), BTN1,
@@ -77,9 +184,9 @@ var id = setInterval(fn, 500); clearInterval(id);</code></pre>
     <h3>Expansion ports</h3>
     <p><code>s.E1</code> / <code>s.E2</code> = <code>{ i2c, ad, int }</code>: a shared I²C bus plus two GPIO pins each.</p>
     <p class="more"><a href="https://www.espruino.com/modules/Smartibot.js" target="_blank">Full module source →</a></p>
-  </dialog>
+  </section>
 
-  <dialog id="addons">
+  <section id="addons" hidden>
     <header><h2>Add-on boards</h2><button class="close" aria-label="Close">✕</button></header>
     <h3>Display: 16×9 colour LEDs (plug into E1)</h3>
     <pre><code>var g = require("Smartibot-display").connect(s.E1);
@@ -92,9 +199,9 @@ d.getLeft(); d.getRight(); d.getGesture();</code></pre>
     <h3>Anything else</h3>
     <p>E1/E2 are plain I²C ports, so many <a href="https://www.espruino.com/Modules" target="_blank">Espruino sensor modules</a> work once wired.</p>
     <p class="more"><a href="https://www.espruino.com/Smartibot#display-board" target="_blank">Add-on docs →</a></p>
-  </dialog>
+  </section>
 
-  <dialog id="explore">
+  <section id="explore" hidden>
     <header><h2>Explore it yourself</h2><button class="close" aria-label="Close">✕</button></header>
     <p>Type these in the IDE console:</p>
     <pre><code>Object.keys(require("Smartibot")) // list functions
@@ -106,9 +213,9 @@ process.memory()                  // free memory</code></pre>
       <li>Build something in <b>Blockly</b>, then switch to code view to see the JS it makes.</li>
       <li>Anything in the <a href="https://www.espruino.com/Reference" target="_blank">Espruino reference</a> runs on the robot, e.g. <code>NRF.*</code> for Bluetooth.</li>
     </ul>
-  </dialog>
+  </section>
 
-  <dialog id="links">
+  <section id="links" hidden>
     <header><h2>Links</h2><button class="close" aria-label="Close">✕</button></header>
     <ul>
       <li><a href="https://www.espruino.com/Smartibot" target="_blank">Smartibot docs</a></li>
@@ -121,7 +228,8 @@ process.memory()                  // free memory</code></pre>
     </ul>
     <h3>Firmware update</h3>
     <p>Hold button A while switching on, then release within 2s. Flash the <code>smartibot</code> file from the <a href="https://www.espruino.com/Download#smartibot" target="_blank">downloads page</a> using the nRF Connect app.</p>
-  </dialog>
+  </section>
+  </aside>
 
   <!-- Style button: hover or focus shows the colour palette (swatches filled in by info.js) -->
   <div class="style-peek">

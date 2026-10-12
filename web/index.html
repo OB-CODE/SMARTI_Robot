@@ -7,15 +7,19 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class="card off" id="card">
-    <h1>Smartibot</h1>
+  <header class="topbar">
+    <span class="brand">Smartibot</span>
     <nav class="menu">
       <button data-open="start">Start</button>
-      <button data-open="commands">Code</button>
+      <button data-open="commands">Commands</button>
       <button data-open="addons">Add-ons</button>
       <button data-open="explore">Explore</button>
       <button data-open="links">Links</button>
     </nav>
+  </header>
+
+  <main class="card off" id="card">
+    <h1>Drive</h1>
     <div class="link" aria-hidden="true">
       <svg class="node" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="11" rx="1"/><path d="M2 19h20"/></svg>
       <span class="wire"></span>
@@ -35,6 +39,10 @@
   <!-- Info pop-ups: opened by the menu buttons above (see info.js) -->
   <dialog id="start">
     <header><h2>Getting started</h2><button class="close" aria-label="Close">✕</button></header>
+    <figure>
+      <img src="https://www.espruino.com/refimages/Smartibot.jpg" alt="Smartibot board fitted to its cardboard body" loading="lazy">
+      <figcaption>Board labels: <b>M1/M2</b> motors · <b>S1–S10</b> servos · <b>E1/E2</b> add-on ports · <b>A/B</b> buttons. Photo: <a href="https://www.espruino.com/Smartibot" target="_blank">espruino.com</a></figcaption>
+    </figure>
     <ul>
       <li>Use <b>Chrome</b> (Web Bluetooth). Switch the robot on.</li>
       <li><b>This page:</b> click Connect and choose <i>Espruino SMARTIBOT</i>.</li>
@@ -114,6 +122,17 @@ process.memory()                  // free memory</code></pre>
     <h3>Firmware update</h3>
     <p>Hold button A while switching on, then release within 2s. Flash the <code>smartibot</code> file from the <a href="https://www.espruino.com/Download#smartibot" target="_blank">downloads page</a> using the nRF Connect app.</p>
   </dialog>
+
+  <!-- Style button: hover or focus shows the colour palette (swatches filled in by info.js) -->
+  <div class="style-peek">
+    <button class="style-btn" aria-label="Show colour palette">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 0 0 0 18c1.1 0 1.7-.8 1.7-1.7 0-.4-.2-.8-.4-1.1-.3-.3-.4-.7-.4-1.1 0-.9.8-1.7 1.7-1.7H16a5 5 0 0 0 5-5c0-4-4-7.4-9-7.4z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10" cy="7" r="1"/><circle cx="14.5" cy="7" r="1"/><circle cx="17" cy="11" r="1"/></svg>
+    </button>
+    <div class="palette" role="tooltip">
+      <h2>Palette</h2>
+      <ul id="swatches"></ul>
+    </div>
+  </div>
 
   <!-- Order matters: each file uses things defined by the ones above it -->
   <script src="https://www.espruino.com/js/uart.js"></script>

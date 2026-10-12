@@ -11,4 +11,5 @@
 
 ## Git
 - Do NOT commit — provide a suggested commit message in chat at the end of each task
+- Keep suggested commit messages SHORT: one line, no body
 - Commits are authored by OBCodes only; no Claude attribution / `Co-Authored-By` lines

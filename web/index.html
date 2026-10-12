@@ -9,6 +9,13 @@
 <body>
   <main class="card off" id="card">
     <h1>Smartibot</h1>
+    <nav class="menu">
+      <button data-open="start">Start</button>
+      <button data-open="commands">Code</button>
+      <button data-open="addons">Add-ons</button>
+      <button data-open="explore">Explore</button>
+      <button data-open="links">Links</button>
+    </nav>
     <div class="link" aria-hidden="true">
       <svg class="node" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="11" rx="1"/><path d="M2 19h20"/></svg>
       <span class="wire"></span>
@@ -25,10 +32,94 @@
     <p class="hint">Hold an arrow key or button to drive</p>
   </main>
 
+  <!-- Info pop-ups: opened by the menu buttons above (see info.js) -->
+  <dialog id="start">
+    <header><h2>Getting started</h2><button class="close" aria-label="Close">✕</button></header>
+    <ul>
+      <li>Use <b>Chrome</b> (Web Bluetooth). Switch the robot on.</li>
+      <li><b>This page:</b> click Connect and choose <i>Espruino SMARTIBOT</i>.</li>
+      <li><b>Code it:</b> open the <a href="https://espruino.github.io/EspruinoWebIDE/?settings=%7B%22BLOCKLY_EXTENSIONS%22%3A%22%7Csmartibot%7C%22%7D" target="_blank">Web IDE with Smartibot blocks</a>, then connect → Web Bluetooth.</li>
+      <li>Type commands in the IDE console (left) to test them live. Use the editor (right) and Upload for whole programs.</li>
+      <li>Code is lost at power-off unless you save it: <code>save()</code> or the IDE's "Save on send" option.</li>
+      <li>Only one app can be connected at a time, so disconnect the IDE before using this page.</li>
+    </ul>
+    <p class="more"><a href="https://www.espruino.com/Quick+Start+BLE#smartibot" target="_blank">Official quick start →</a></p>
+  </dialog>
+
+  <dialog id="commands">
+    <header><h2>Commands</h2><button class="close" aria-label="Close">✕</button></header>
+    <pre><code>var s = require("Smartibot");</code></pre>
+    <h3>Motors</h3>
+    <pre><code>s.setMotor(1, 0.5);  // motor 1..4, speed -1..1
+s.setMotor(1, 0);    // stop</code></pre>
+    <p>Motors 1 and 2 drive the wheels. Test which one is left.</p>
+    <h3>Eye LEDs</h3>
+    <pre><code>s.setLEDs([255,0,0], [0,0,255]); // left, right [R,G,B] 0..255
+s.setLEDs();                     // off
+LED.write(1);                    // small blue LED</code></pre>
+    <h3>Servos</h3>
+    <pre><code>s.setServo(1, 50);   // servo 1..10, position 0..100</code></pre>
+    <h3>Buttons</h3>
+    <pre><code>BTN1.read();  // A (BTN2 = B)
+setWatch(e =&gt; print(e.state), BTN1,
+  { repeat: true, edge: "both" });</code></pre>
+    <h3>Timing</h3>
+    <pre><code>setTimeout(() =&gt; s.setMotor(1, 0), 1000);
+var id = setInterval(fn, 500); clearInterval(id);</code></pre>
+    <h3>Expansion ports</h3>
+    <p><code>s.E1</code> / <code>s.E2</code> = <code>{ i2c, ad, int }</code>: a shared I²C bus plus two GPIO pins each.</p>
+    <p class="more"><a href="https://www.espruino.com/modules/Smartibot.js" target="_blank">Full module source →</a></p>
+  </dialog>
+
+  <dialog id="addons">
+    <header><h2>Add-on boards</h2><button class="close" aria-label="Close">✕</button></header>
+    <h3>Display: 16×9 colour LEDs (plug into E1)</h3>
+    <pre><code>var g = require("Smartibot-display").connect(s.E1);
+g.drawString("Hi"); g.flip();</code></pre>
+    <p>Uses the standard <a href="https://www.espruino.com/Graphics" target="_blank">Graphics API</a>. Call <code>g.flip()</code> to show what you drew.</p>
+    <h3>Distance: laser + gesture sensors (plug into E1)</h3>
+    <pre><code>var d = require("Smartibot-distance").connect(s.E1);
+d.getLeft(); d.getRight(); d.getGesture();</code></pre>
+    <p>Uses VL53L0X time-of-flight and APDS9960 gesture sensors.</p>
+    <h3>Anything else</h3>
+    <p>E1/E2 are plain I²C ports, so many <a href="https://www.espruino.com/Modules" target="_blank">Espruino sensor modules</a> work once wired.</p>
+    <p class="more"><a href="https://www.espruino.com/Smartibot#display-board" target="_blank">Add-on docs →</a></p>
+  </dialog>
+
+  <dialog id="explore">
+    <header><h2>Explore it yourself</h2><button class="close" aria-label="Close">✕</button></header>
+    <p>Type these in the IDE console:</p>
+    <pre><code>Object.keys(require("Smartibot")) // list functions
+require("Smartibot").setServo     // show its code
+NRF.getBattery()                  // battery voltage
+process.memory()                  // free memory</code></pre>
+    <ul>
+      <li>Press <b>Tab</b> in the console to autocomplete.</li>
+      <li>Build something in <b>Blockly</b>, then switch to code view to see the JS it makes.</li>
+      <li>Anything in the <a href="https://www.espruino.com/Reference" target="_blank">Espruino reference</a> runs on the robot, e.g. <code>NRF.*</code> for Bluetooth.</li>
+    </ul>
+  </dialog>
+
+  <dialog id="links">
+    <header><h2>Links</h2><button class="close" aria-label="Close">✕</button></header>
+    <ul>
+      <li><a href="https://www.espruino.com/Smartibot" target="_blank">Smartibot docs</a></li>
+      <li><a href="https://espruino.github.io/EspruinoWebIDE/?settings=%7B%22BLOCKLY_EXTENSIONS%22%3A%22%7Csmartibot%7C%22%7D" target="_blank">Web IDE (Smartibot blocks)</a></li>
+      <li><a href="https://www.espruino.com/Reference" target="_blank">Espruino API reference</a></li>
+      <li><a href="https://www.espruino.com/Graphics" target="_blank">Graphics (display board)</a></li>
+      <li><a href="https://www.espruino.com/Modules" target="_blank">Modules</a></li>
+      <li><a href="https://www.espruino.com/Tutorials" target="_blank">Tutorials</a></li>
+      <li><a href="https://forum.espruino.com" target="_blank">Espruino forum</a></li>
+    </ul>
+    <h3>Firmware update</h3>
+    <p>Hold button A while switching on, then release within 2s. Flash the <code>smartibot</code> file from the <a href="https://www.espruino.com/Download#smartibot" target="_blank">downloads page</a> using the nRF Connect app.</p>
+  </dialog>
+
   <!-- Order matters: each file uses things defined by the ones above it -->
   <script src="https://www.espruino.com/js/uart.js"></script>
   <script src="connection.js"></script>
   <script src="robot.js"></script>
   <script src="controls.js"></script>
+  <script src="info.js"></script>
 </body>
 </html>

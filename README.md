@@ -12,11 +12,11 @@ Getting started with the [Espruino Smartibot](https://www.espruino.com/Smartibot
 
 ```js
 var smarti = require("Smartibot");
-smarti.setLeftMotor(1);  // full speed forward
-smarti.setRightMotor(1);
+smarti.setMotor(1, 1);  // motor 1..4, speed -1..1
+smarti.setMotor(2, 1);
 // stop
-smarti.setLeftMotor(0);
-smarti.setRightMotor(0);
+smarti.setMotor(1, 0);
+smarti.setMotor(2, 0);
 ```
 
 ## Try it with blocks

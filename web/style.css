@@ -106,3 +106,55 @@ h1 { margin: 0 0 4px; font-size: 1.4rem; }
 [data-direction="right"]    { grid-area: 2 / 3; }
 [data-direction="back"]     { grid-area: 3 / 2; }
 .hint { margin: 20px 0 0; color: var(--muted); font-size: 0.85rem; }
+
+/* ----- Menu and info pop-ups ----- */
+.menu { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px; margin: 10px 0 4px; }
+.menu button {
+  padding: 4px 8px;
+  border: 1px solid var(--btn-edge);
+  border-radius: 999px;
+  background: none;
+  color: var(--muted);
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+.menu button:hover { color: var(--text); border-color: var(--muted); }
+dialog {
+  width: min(520px, calc(100vw - 32px));
+  max-height: calc(100vh - 32px);
+  padding: 0 20px 20px;
+  border: 0;
+  border-radius: 16px;
+  background: var(--card);
+  color: var(--text);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+dialog::backdrop { background: rgba(0, 0, 0, 0.45); }
+dialog header {
+  position: sticky; top: 0;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 16px 0 8px;
+  background: var(--card);
+}
+dialog h2 { margin: 0; font-size: 1.1rem; }
+dialog h3 { margin: 16px 0 4px; font-size: 0.9rem; }
+dialog p, dialog ul { margin: 6px 0; }
+dialog ul { padding-left: 20px; }
+dialog a { color: var(--accent); }
+dialog code { font-size: 0.85em; }
+dialog pre {
+  margin: 6px 0;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--btn);
+  overflow-x: auto;
+}
+dialog .more { margin-top: 16px; }
+.close {
+  border: 0; background: none;
+  color: var(--muted);
+  font-size: 1rem;
+  cursor: pointer;
+}

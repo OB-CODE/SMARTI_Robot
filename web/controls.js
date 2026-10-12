@@ -24,7 +24,7 @@
   };
 
   document.onkeydown = e => {
-    if (!KEYS[e.key]) return;
+    if (!KEYS[e.key] || document.querySelector("dialog[open]")) return; // arrows scroll pop-ups, not drive
     e.preventDefault();
     if (!e.repeat) press(KEYS[e.key]);
   };
